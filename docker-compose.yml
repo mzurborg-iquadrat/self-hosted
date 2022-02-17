@@ -30,8 +30,6 @@ x-sentry-defaults: &sentry_defaults
       <<: *depends_on-healthy
     memcached:
       <<: *depends_on-default
-    smtp:
-      <<: *depends_on-default
     snuba-api:
       <<: *depends_on-default
     snuba-consumer:
@@ -102,14 +100,6 @@ networks:
       config:
         - subnet: 172.42.0.0/16
 services:
-  smtp:
-    <<: *restart_policy
-    <<: *network-defaults
-    image: tianon/exim4
-    hostname: ${SENTRY_MAIL_HOST:-''}
-    volumes:
-      - "sentry-smtp:/var/spool/exim4"
-      - "sentry-smtp-log:/var/log/exim4"
   memcached:
     <<: *restart_policy
     <<: *network-defaults
@@ -231,16 +221,6 @@ services:
       interval: 3s
       timeout: 600s
       retries: 200
-  geoipupdate:
-    <<: *network-defaults
-    image: "maxmindinc/geoipupdate:v4.7.1"
-    # Override the entrypoint in order to avoid using envvars for config.
-    # Futz with settings so we can keep mmdb and conf in same dir on host
-    # (image looks for them in separate dirs by default).
-    entrypoint:
-      ["/usr/bin/geoipupdate", "-d", "/sentry", "-f", "/sentry/GeoIP.conf"]
-    volumes:
-      - "./geoip:/sentry"
   snuba-api:
     <<: *snuba_defaults
   # Kafka consumer responsible for feeding events into Clickhouse
@@ -399,8 +379,6 @@ volumes:
 
   # These store ephemeral data that needn't persist across restarts.
   sentry-secrets:
-  sentry-smtp:
   sentry-zookeeper-log:
   sentry-kafka-log:
-  sentry-smtp-log:
   sentry-clickhouse-log:
