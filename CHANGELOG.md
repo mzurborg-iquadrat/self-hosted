@@ -1,5 +1,28 @@
 # Changelog
 
+## 22.7.0
+
+### Various fixes & improvements
+
+- ref: use sort -V to check minimum versions (#1553) by @ethanhs
+- Get more data from users in issue templates (#1497) by @aminvakil
+- Add ARM support (#1538) by @chadwhitacre
+- do not use gosu for snuba-transactions-cleanup and snuba-cleanup (#1564) by @goganchic
+- ref: Replace regex with --short flag to get compose version (#1551) by @ethanhs
+- Improve installation through proxy (#1543) by @goganchic
+- Cleanup .env{,.custom} handling (#1539) by @chadwhitacre
+- Bump nginx:1.22.0-alpine (#1506) by @aminvakil
+- Run release a new version job only on getsentry (#1529) by @aminvakil
+
+## 22.6.0
+
+### Various fixes & improvements
+
+- fix "services.web.healthcheck.retries must be a number" (#1482) by @yuval1986
+- Add volume for nginx cache (#1511) by @glensc
+- snuba: New subscriptions infrastucture rollout (#1507) by @lynnagara
+- Ease modification of base image (#1479) by @spawnia
+
 ## 22.5.0
 
 ### Various fixes & improvements
